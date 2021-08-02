@@ -1,0 +1,83 @@
+@import '../../index.scss';
+
+.create-article-form {
+  & {
+    width: 938px;
+    min-height: 701px;
+    @extend %form;
+  }
+
+  &__title {
+    color: $form-text-color;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  &__input {
+    @extend %input-form;
+    padding-left: 12px;
+    width: 874px;
+    margin-bottom: 21px;
+  }
+
+  &__input-label {
+    color: $form-text-color;
+    font-size: 14px;
+  }
+
+  &__textarea {
+    @extend %input-form;
+    height: inherit;
+    width: inherit;
+    padding-left: 12px;
+    position: relative;
+    resize: none;
+  }
+
+  &__input::placeholder {
+    color: $form-placeholder-color;
+    font-size: 16px;
+  }
+  &__textarea::placeholder {
+    color: $form-placeholder-color;
+    font-size: 16px;
+  }
+
+  &__tag-button {
+    @extend %input-form;
+    width: 150px;
+    border-color: $title-color;
+    color: $title-color;
+    font-size: 16px;
+    margin-left: 15px;
+  }
+
+  &__tag-button-hidden {
+    @extend %input-form;
+    width: 150px;
+    border-color: red;
+    color: red;
+    font-size: 16px;
+    margin-left: 15px;
+  }
+
+  &__tag-button-hidden:hover {
+    border: 1px solid red;
+  }
+
+  &__input-submit {
+    @extend %input-form;
+    width: 319px;
+    background-color: $title-color;
+    color: $background-color-base;
+    font-size: 16px;
+  }
+
+  &__tags-wrapper {
+    display: flex;
+  }
+}
+
+.errors {
+  color: red;
+}

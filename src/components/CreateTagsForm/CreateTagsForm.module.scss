@@ -1,0 +1,32 @@
+@import '../../index.scss';
+
+.tags-form {
+    &{
+        width: 500px;
+    }
+
+    &__input {
+        @extend %input-form;
+        padding-left: 12px;
+        width: 250px;
+        margin-bottom: 21px;
+      }
+
+    &__tag-button {
+        @extend %input-form;
+        width: 150px;
+        border-color: red;
+        color: red;
+        font-size: 16px;
+        margin-left: 15px;
+      }
+
+      &__tag-button:hover {
+          border:  1px solid red;
+      }
+
+      &__input::placeholder {
+        color: $form-placeholder-color;
+        font-size: 16px;
+      }
+}

@@ -1,0 +1,50 @@
+@import '../../index.scss';
+
+.comment {
+  &__block {
+    position: relative;
+    max-width: 682px;
+    max-height: 65px;
+  }
+
+  &__title {
+    color: $title-color;
+    font-size: 20px;
+    margin: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    background-color: $background-color-base;
+    border: none;
+  }
+
+  &__text {
+    line-height: 22px;
+  }
+
+  &__button {
+    border: none;
+    background-color: $background-color-base;
+    cursor: pointer;
+  }
+
+  &__button-favorited {
+    border: none;
+    background-color: $background-color-base;
+    cursor: pointer;
+  }
+
+}
+
+.title-block {
+  display: flex;
+}
+
+.likes-counter {
+  color: $text-color;
+  font-size: $text-size;
+  margin-top: 7px;
+}
+
+.tags-container {
+  max-width: 390px;
+}

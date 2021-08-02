@@ -1,0 +1,46 @@
+@import '../../index.scss';
+
+.sign-in {
+  & {
+    height: 374px;
+    width: 384px;
+    @extend %form;
+  }
+
+  &__input {
+    @extend %input-form;
+    padding-left: 12px;
+  }
+
+  &__input-submit {
+    @extend %input-form;
+    background-color: $title-color;
+    color: $background-color-base;
+    font-size: 16px;
+  }
+
+  &__title {
+    color: $form-text-color;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  &__input::placeholder {
+    color: $form-placeholder-color;
+    font-size: 16px;
+  }
+
+  &__input-label {
+    color: $form-text-color;
+    font-size: 14px;
+  }
+
+  &__link {
+    color: $form-link-color;
+    text-align: center;
+  }
+}
+
+.errors {
+  color: red;
+}

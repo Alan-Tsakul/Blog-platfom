@@ -1,0 +1,59 @@
+@import '../../index.scss';
+
+.sign-up {
+  & {
+    min-height: 599px;
+    width: 384px;
+    @extend %form;
+  }
+
+  &__input {
+    @extend %input-form;
+    padding-left: 12px;
+  }
+
+  &__input-submit {
+    @extend %input-form;
+    background-color: $title-color;
+    color: $background-color-base;
+    font-size: 16px;
+  }
+
+  &__title {
+    color: $form-text-color;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  &__input-label {
+    color: $form-text-color;
+    font-size: 14px;
+  }
+
+  &__input::placeholder {
+    color: $form-placeholder-color;
+    font-size: 16px;
+  }
+
+  &__divider {
+    border-top: 1px solid #e8e8e8;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  &__checkbox-label {
+    color: $form-checkbox-label-text-color;
+    font-size: 14px;
+  }
+
+  &__link {
+    color: $form-link-color;
+    text-align: center;
+  }
+}
+
+.errors {
+  color: red;
+}

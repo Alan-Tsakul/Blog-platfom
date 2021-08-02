@@ -1,0 +1,26 @@
+@import '../../index.scss';
+
+.user {
+  &__block {
+    display: flex;
+  }
+
+  &__info {
+    margin-right: 12px;
+  }
+
+  &__date {
+    color: $text-color-secondary;
+    margin-top: 4px;
+    text-align: center;
+  }
+
+  &__name {
+    font-size: 18px;
+  }
+
+  &__image{
+    height: 45px;
+    border-radius: 45px;
+  }
+}

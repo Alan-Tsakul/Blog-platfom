@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('../src/fonts/Inter-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../src/fonts/Roboto-Medium.ttf');
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+$text-color: #000000;
+$success-color: #52c41a;
+$font-style1: 'Inter', sans-serif;
+$background-color-base: #ffffff;
+$title-color: #1890ff;
+$text-size: 12px;
+$text-color-secondary: rgba(0, 0, 0, 0.5);
+$form-text-color: #262626;
+$form-placeholder-color:#BFBFBF;
+$form-checkbox-label-text-color: #595959;
+$form-link-color: #8C8C8C;
+$font-style2: 'Roboto', sans-serif;
+$error-color: #F5222D;
+
+%main-font {
+  font-family: $font-style1;
+  font-weight: 400;
+}
+
+%form {
+  padding: 32px;
+  background-color: $background-color-base;     
+  border-radius: 6px;
+  margin-top: 59px;
+  display: flex;
+  flex-direction: column;
+  background: $background-color-base;
+  $font-style2: 'Roboto', sans-serif;
+}
+
+%input-form {
+  height: 40px;
+  width: 320px;
+  background: $background-color-base;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+%input-form:hover{
+  border: 1px solid $title-color;
+}
+
