@@ -1,1 +1,1 @@
-# Blog-platfom
+https://blog-platform-sepia.vercel.app/
