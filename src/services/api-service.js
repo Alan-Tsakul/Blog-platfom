@@ -1,5 +1,5 @@
 export default class Api {
-  apiBase = `https://conduit-api-realworld.herokuapp.com/`;
+  apiBase = `https://conduit-api-realworld.herokuapp.com/api/`;
 
   token;
 
@@ -15,7 +15,7 @@ export default class Api {
     this.user = localStorage.setItem('User', JSON.stringify(user));
   }
 
-  async getArticlesList(offset) {
+  async getArticlesList(offset = 1) {
     const res = await fetch(`${this.apiBase}articles/?offset=${offset}&limit=5`);
     const data = await res.json();
     return data;
