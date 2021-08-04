@@ -1,5 +1,5 @@
 export default class Api {
-  apiBase = `https://conduit.productionready.io/api/`;
+  apiBase = `https://conduit-api-realworld.herokuapp.com/`;
 
   token;
 
