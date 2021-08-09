@@ -11,6 +11,8 @@
     height: 80px;
     font-size: 18px;
     padding: 22px;
+    border-left: 1px solid $form-placeholder-color;
+    border-right: 1px solid $form-placeholder-color
   }
 
   &__link{

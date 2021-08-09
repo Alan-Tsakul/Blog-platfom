@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/user-info-action';
+import * as actions from '../../store/actions/user-info-action';
 import styles from './Sign-up-form.module.scss';
 
-const SignUp = ({ putUserRegistration }) => {
+const SignUp = ({ putUserRegistration, isRegistered }) => {
   const history = useHistory();
   const {
     register,
@@ -16,8 +16,13 @@ const SignUp = ({ putUserRegistration }) => {
   } = useForm();
   const onSubmit = (data) => {
     putUserRegistration(data.username, data.email, data.password);
-    history.push('/sign-in');
   };
+
+  useEffect(() => {
+    if (isRegistered) {
+      history.push('/sign-in');
+    }
+  }, [isRegistered]); //eslint-disable-line
 
   return (
     <div className={styles['sign-up']}>
@@ -93,9 +98,8 @@ const SignUp = ({ putUserRegistration }) => {
         {errors.repeatPassword && <p className={styles.errors}>{errors.repeatPassword.message}</p>}
         <div className={styles['sign-up__divider']}>
           <label htmlFor="checkbox" className={styles['sign-up__checkbox-label']}>
-            <input type="checkbox" id="checkbox" name="checkbox" className={styles['sign-up__checkbox']} 
-            required/> &nbsp;I
-            agree to the processing of my personal information
+            <input type="checkbox" id="checkbox" name="checkbox" className={styles['sign-up__checkbox']} required />{' '}
+            &nbsp;I agree to the processing of my personal information
           </label>
         </div>
         <button type="submit" className={styles['sign-up__input-submit']}>
@@ -110,8 +114,15 @@ const SignUp = ({ putUserRegistration }) => {
   );
 };
 
+function mapStateToProps(state) {
+  return {
+    isRegistered: state.user.isRegistered,
+  };
+}
+
 SignUp.propTypes = {
   putUserRegistration: PropTypes.func.isRequired,
+  isRegistered: PropTypes.bool.isRequired,
 };
 
-export default connect(null, actions)(SignUp);
+export default connect(mapStateToProps, actions)(SignUp);

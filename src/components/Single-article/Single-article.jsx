@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { Popconfirm, message } from 'antd';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/load-articles-action';
+import * as actions from '../../store/actions/load-articles-action';
 import Article from '../Article/Article';
 import styles from './Single-article.module.scss';
 
@@ -19,7 +19,7 @@ const SingleArticle = ({ itemId, getSingleArticle, oneArticle, item, deleteArtic
 
   function confirm() {
     deleteArticle(itemId);
-    history.push('/auth');
+    history.push('/');
   }
 
   function cancel() {

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import CreateTagsForm from '../CreateTagsForm/CreateTagsForm';
-import * as actions from '../../actions/load-articles-action';
+import CreateTagsForm from '../Create-tags-form/Create-tags-form';
+import * as actions from '../../store/actions/load-articles-action';
 import styles from './Create-article-form.module.scss';
 
 const CreateArticleForm = ({ sendArticle, editedArticle, sendEditedArticle }) => {
@@ -35,6 +35,7 @@ const CreateArticleForm = ({ sendArticle, editedArticle, sendEditedArticle }) =>
 
   function onAddTag() {
     setState([...tagsList, tags]);
+    document.getElementById('tagList').value = "";
   }
 
   function onRemoveTag(removeIndex) {
@@ -80,6 +81,7 @@ const CreateArticleForm = ({ sendArticle, editedArticle, sendEditedArticle }) =>
         <label htmlFor="body" className={styles['create-article-form__input-label']}>
           Text
           <textarea
+            type="text"
             id="body"
             className={styles['create-article-form__textarea']}
             rows="8"
@@ -101,6 +103,7 @@ const CreateArticleForm = ({ sendArticle, editedArticle, sendEditedArticle }) =>
         />
         <div className={styles['create-article-form__tags-wrapper']}>
           <input
+            type="text"
             placeholder="Tag"
             id="tagList"
             className={styles['create-article-form__input']}

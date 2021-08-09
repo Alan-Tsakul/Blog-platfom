@@ -1,36 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { notification } from 'antd';
-import * as actions from '../../actions/user-info-action';
+import * as actions from '../../store/actions/user-info-action';
+import { useAuth } from '../../routers/use-auth';
 import styles from './Sign-in-form.module.scss';
 import 'antd/dist/antd.css';
 
 const SignIn = ({ putUserAuthentication }) => {
-  const currentUser = JSON.parse(localStorage.getItem('User'));
   const history = useHistory();
+  const auth = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const openNotification = () => {
-    notification.open({
-      message: 'Warning!',
-      description: 'Try again, please!',
-    });
-  };
-
   const onSubmit = (data) => {
     putUserAuthentication(data.email, data.password);
-    if (currentUser) {
+  };
+
+  useEffect(() => {
+    if (auth.isAuth) {
       history.push('/');
     }
-    openNotification();
-  };
+  }, [auth.isAuth]); //eslint-disable-line
 
   return (
     <div className={styles['sign-in']}>
@@ -70,7 +65,9 @@ const SignIn = ({ putUserAuthentication }) => {
           />
         </label>
         {errors.password && <p className={styles.errors}>{errors.password.message}</p>}
-        <input type="submit" className={styles['sign-in__input-submit']} value="Login" />
+        <button type="submit" className={styles['sign-in__input-submit']}>
+          Login
+        </button>
         <div className={styles['sign-in__link']}>
           <span>Don’t have an account?</span>
           <Link to="/sign-up">&nbsp; Sign Up</Link>

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import  loadArticlesReducer   from './load-articles-reducer';
-import userInfoReducer from './user-info-reducer';
+import  loadArticlesReducer   from './reducers/load-articles-reducer';
+import userInfoReducer from './reducers/user-info-reducer';
 
 const rootReducer = combineReducers({
   load: loadArticlesReducer,

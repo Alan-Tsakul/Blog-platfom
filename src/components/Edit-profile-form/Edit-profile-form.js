@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/user-info-action';
+import * as actions from '../../store/actions/user-info-action';
 import styles from './Edit-profile-form.module.scss';
 
-const EditProfileForm = ({ editUserAuthorized }) => {
-  const currentUser = JSON.parse(localStorage.getItem('User'));
+const EditProfileForm = ({ editUserAuthorized, currentuser }) => {
   const history = useHistory();
   const {
     register,
@@ -29,7 +28,7 @@ const EditProfileForm = ({ editUserAuthorized }) => {
             type="text"
             id="username"
             className={styles['edit-profile-form__input']}
-            placeholder={currentUser.username}
+            placeholder={currentuser.username}
             name="userName"
             {...register('username', {
               required: 'USERNAME REQUIRED',
@@ -45,7 +44,7 @@ const EditProfileForm = ({ editUserAuthorized }) => {
             type="text"
             id="email-address"
             className={styles['edit-profile-form__input']}
-            placeholder={currentUser.email}
+            placeholder={currentuser.email}
             name="email-address"
             {...register('email', {
               required: 'EMAIL REQUIRED',
@@ -78,7 +77,7 @@ const EditProfileForm = ({ editUserAuthorized }) => {
             type="url"
             id="avatar-image"
             className={styles['edit-profile-form__input']}
-            placeholder={currentUser.image}
+            placeholder={currentuser.image}
             name="avatarimage"
             {...register('avatarimage', {
               pattern: {
@@ -95,8 +94,15 @@ const EditProfileForm = ({ editUserAuthorized }) => {
   );
 };
 
+function mapStateToProps(state) {
+  return {
+    currentuser: state.user.currentuser,
+  };
+}
+
 EditProfileForm.propTypes = {
+  currentuser: PropTypes.objectOf(PropTypes.object).isRequired,
   editUserAuthorized: PropTypes.func.isRequired,
 };
 
-export default connect(null, actions)(EditProfileForm);
+export default connect(mapStateToProps, actions)(EditProfileForm);

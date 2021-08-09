@@ -1,5 +1,7 @@
 export default class Api {
-  apiBase = `https://conduit-api-realworld.herokuapp.com/api/`;
+  // apiBase = `https://conduit-api-realworld.herokuapp.com/api/`;
+
+    apiBase = `https://conduit.productionready.io/api/`;
 
   token;
 
@@ -34,7 +36,7 @@ export default class Api {
       },
     };
 
-    const res = await fetch(`${this.apiBase}/users/login`, {
+    const res = await fetch(`${this.apiBase}users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',

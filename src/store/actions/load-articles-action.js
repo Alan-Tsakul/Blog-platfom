@@ -1,26 +1,42 @@
-import Api from '../services/api-service';
+import Api from '../../services/api-service';
+
+import {
+  LOAD_ARTICLES,
+  FETCH_DATA,
+  LOAD_ERROR,
+  CURRENT_PAGE,
+  LOAD_SINGLE_ARTICLE,
+  CREATE_ARTICLE,
+  EDIT_ARTICLE,
+  DELETE_ARTICLE,
+  LIKE_FAVORITE_ARTICLE,
+  UNLIKE_FAVORITE_ARTICLE,
+  LIKES_SWITCH,
+} from '../actions-constants';
 
 const api = new Api();
 
-const getArticlesAction = (payload) => ({ type: 'Загрузить статьи', payload });
+const getArticlesAction = (payload) => ({ type: LOAD_ARTICLES, payload });
 
-export const setCurrentPage = (currentPage) => ({ type: 'Текущая страница', currentPage });
+export const setCurrentPage = (currentPage) => ({ type: CURRENT_PAGE, currentPage });
 
-const toggleIsFetching = (isFetching) => ({ type: 'Загрузка данных', isFetching });
+const toggleIsFetching = (isFetching) => ({ type: FETCH_DATA, isFetching });
 
-const setFetchError = (isFetchError) => ({ type: 'Ошибка загрузки', isFetchError });
+const setFetchError = (isFetchError) => ({ type: LOAD_ERROR, isFetchError });
 
-const getOneArticleAction = (payload) => ({ type: 'Загрузить одну статью', payload });
+const getOneArticleAction = (payload) => ({ type: LOAD_SINGLE_ARTICLE, payload });
 
-const createArticleAction = () => (article) => ({ type: 'Создать статью', article });
+const createArticleAction = () => (article) => ({ type: CREATE_ARTICLE, article });
 
-const editArticleAction = () => (article) => ({ type: 'Редактировать статью', article });
+const editArticleAction = () => (article) => ({ type: EDIT_ARTICLE, article });
 
-const deleteArticleAction = () => (slug) => ({ type: 'Удалить статью', slug });
+const deleteArticleAction = () => (slug) => ({ type: DELETE_ARTICLE, slug });
 
-const setFavoriteArticleAction = () => (slug) => ({ type: 'Отметить любимую статью', slug });
+const setFavoriteArticleAction = () => (slug) => ({ type: LIKE_FAVORITE_ARTICLE, slug });
 
-const setUnFavoriteArticleAction = () => (slug) => ({ type: 'Удалить любимую статью', slug });
+const setUnFavoriteArticleAction = () => (slug) => ({ type: UNLIKE_FAVORITE_ARTICLE, slug });
+
+const likesSwitchAction = (isLiked) => ({ type: LIKES_SWITCH, isLiked });
 
 export const getArticles = (offset) => (dispatch) => {
   api
@@ -69,11 +85,13 @@ export const deleteArticle = (slug) => (dispatch) => {
 export const setFavoriteArticle = (slug) => (dispatch) => {
   api.setFavoriteArticle(slug).then((json) => {
     dispatch(setFavoriteArticleAction(json));
+    dispatch(likesSwitchAction(true))
   });
 };
 
 export const setUnFavoriteArticle = (slug) => (dispatch) => {
   api.setUnFavoriteArticle(slug).then((json) => {
     dispatch(setUnFavoriteArticleAction(json));
+    dispatch(likesSwitchAction(false))
   });
 };

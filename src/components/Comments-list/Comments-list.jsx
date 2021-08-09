@@ -2,48 +2,44 @@ import { React, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/load-articles-action';
+import * as actions from '../../store/actions/load-articles-action';
 import TagsList from '../Tags-list/Tags-list';
+import { useAuth } from '../../routers/use-auth';
 import styles from './Comments-list.module.scss';
 
-const CommentsList = ({ item, setFavoriteArticle, setUnFavoriteArticle }) => {
-  const currentUser = JSON.parse(localStorage.getItem('User'));
+const CommentsList = ({ item, setFavoriteArticle, setUnFavoriteArticle, isLiked }) => {
   const history = useHistory();
+  const auth = useAuth();
+  const [state, setState] = useState(false)
 
-  const articleTitle = (
-    <Link to={`/article/${item.slug}`} className={styles.comment__title} title="Открыть статью">
-      {item.title}
-    </Link>
-  );
+  const favIcon = '/images/path4.svg';
+  const unFavIcon = '/images/Vector.svg';
 
-  const buttonClass = styles.comment__button;
-
-  const [isFavorite, setFavorite] = useState(false);
-
-  const buttonClassFavorite = styles['comment__button-favorited'];
-
-  function setFavoriteFunction() {
-    if (!currentUser) {
+  function setFavorite() {
+    if (!auth.isAuth) {
       history.push('/sign-in');
+    } else {
+      if (isLiked) {
+        setUnFavoriteArticle(item.slug);
+        setState(false)
+      }
+      if (!isLiked) {
+        setFavoriteArticle(item.slug);
+        setState(true)
+      }
     }
-    setFavorite(!isFavorite);
-    if (isFavorite) {
-      setUnFavoriteArticle(item.slug);
-    }
-    setFavoriteArticle(item.slug);
   }
-
-  const srcFav = '/images/path4.svg';
-  const srcUnFav = '/images/Vector.svg';
 
   return (
     <div className={styles.comment__block}>
       <div className={styles['title-block']}>
-        {articleTitle}
-        <button type="button" className={isFavorite ? buttonClass : buttonClassFavorite} onClick={setFavoriteFunction}>
-          <img src={isFavorite ? srcFav : srcUnFav} alt="like" />
+        <Link to={`/article/${item.slug}`} className={styles.comment__title} title="Открыть статью">
+          {item.title}
+        </Link>
+        <button type="button" className={styles.comment__button} onClick={() => setFavorite()}>
+          <img src={state === false ? unFavIcon : favIcon} alt="like" /> &nbsp;
+          <span className={styles['likes-counter']}>{state === false ? item.favoritesCount : item.favoritesCount + 1}</span>
         </button>
-        <span className={styles['likes-counter']}>{isFavorite ? item.favoritesCount + 1 : item.favoritesCount}</span>
       </div>
       <div className={styles['tags-container']}>
         <TagsList item={item} />
@@ -53,10 +49,17 @@ const CommentsList = ({ item, setFavoriteArticle, setUnFavoriteArticle }) => {
   );
 };
 
+function mapStateToProps(state) {
+  return {
+    isLiked: state.load.isLiked,
+  };
+}
+
 CommentsList.propTypes = {
   item: PropTypes.objectOf(PropTypes.object).isRequired,
   setFavoriteArticle: PropTypes.func.isRequired,
   setUnFavoriteArticle: PropTypes.func.isRequired,
+  isLiked: PropTypes.bool.isRequired,
 };
 
-export default connect(null, actions)(CommentsList);
+export default connect(mapStateToProps, actions)(CommentsList);

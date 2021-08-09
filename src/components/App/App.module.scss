@@ -2,7 +2,7 @@
 
 .app {
   & {
-    background-color: #e5e5e5;
+    background-color: $background-color-base;
   }
 
   &__container {
@@ -19,4 +19,5 @@
     font-size: $text-size;
     @extend %main-font;
   }
+  
 }

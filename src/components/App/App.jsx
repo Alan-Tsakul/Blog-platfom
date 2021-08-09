@@ -1,40 +1,59 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as actions from '../../store/actions/user-info-action';
 import styles from './App.module.scss';
-import Header from '../Header/Header';
-import ArticlesList from '../Articles-list/Articles-list';
-import SignUp from '../Sign-up-form/Sign-up-form';
-import SignIn from '../Sign-in-form/Sign-in-form';
-import EditProfileForm from '../Edit-profile-form/Edit-profile-form';
-import CreateArticleForm from '../Create-article-form/Create-article-form';
-import EditArticleForm from '../Edit-article-form/Edit-article-form';
+import { ProvideAuth } from '../../routers/use-auth';
+import RouteService from '../../routers/route-service';
 
-const App = ({ oneArticle }) => (
-  <Router>
-    <div className={styles.app}>
-      <div className={styles.app__container}>
-        <Header />
-        <ArticlesList />
-        <Route path="/sign-up" exact component={SignUp} />
-        <Route path="/sign-in" exact component={SignIn} />
-        <Route path="/profile" exact component={EditProfileForm} />
-        <Route path="/new-article" exact component={CreateArticleForm} />
-        <Route path={`/articles/${oneArticle.slug}/edit`} exact component={EditArticleForm} />
-      </div>
-    </div>
-  </Router>
-);
+const App = ({ userLSDataAction, currentuser, oneArticle }) => {
+  useEffect(() => {
+    userLSDataAction();
+  }, []); //eslint-disable-line
+
+  const route = new RouteService();
+  const SignIn = route.getSignIn();
+  const SignUp = route.getSignUp();
+  const ArticlesList = route.getArticlesList();
+  const SingleArticle = route.getSingleArticle();
+  const EditProfileForm = route.getEditProfileForm();
+  const CreateArticleForm = route.getCreateArticleForm();
+  const EditArticleForm = route.getEditArticleForm(oneArticle.slug);
+  const HeaderAuth = route.getHeaderAuth();
+  const Header = route.getHeader();
+
+  return (
+    <ProvideAuth>
+      <Router>
+        <div className={styles.app}>
+          <div className={styles.app__container}>
+            {currentuser ? HeaderAuth : Header}
+            {SignUp}
+            {SignIn}
+            {ArticlesList}
+            {SingleArticle}
+            {EditProfileForm}
+            {CreateArticleForm}
+            {EditArticleForm}
+          </div>
+        </div>
+      </Router>
+    </ProvideAuth>
+  );
+};
 
 function mapStateToProps(state) {
   return {
+    currentuser: state.user.currentuser,
     oneArticle: state.load.oneArticle,
   };
 }
 
 App.propTypes = {
+  currentuser: PropTypes.objectOf(PropTypes.object).isRequired,
+  userLSDataAction: PropTypes.func.isRequired,
   oneArticle: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, actions)(App);
